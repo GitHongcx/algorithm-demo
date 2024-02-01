@@ -28,8 +28,98 @@ public class DoubleLinkedListToDeque<T> {
         return size;
     }
 
+    /**
+     * 从队列头部加入元素
+     * @param value
+     */
+    public void pushHead(T value) {
+        DNode<T> node = new DNode<>(value);
+        if (head == null || tail == null) {
+            //之前没有元素，头和尾都指向当前元素
+            head = node;
+            tail = node;
+        } else {
+            //先操作指针，再移动头
+            node.next = head;
+            head.pre = node;
+            head = node;
+        }
+        size++;
+    }
 
+    /**
+     * 从队列尾部加入元素
+     * @param value
+     */
+    public void pushTail(T value) {
+        DNode<T> node = new DNode<>(value);
+        if (head == null || tail == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.next = node;
+            node.pre = tail;
+            tail = node;
+        }
+        size++;
+    }
 
+    /**
+     * 从队列头部弹出元素
+     * @return
+     */
+    public T pollHead() {
+        if (head == null) {
+            return null;
+        }
+        T value = head.value;
+        if (head == tail) {
+            //刚好只剩一个元素的时候
+            head = null;
+            tail = null;
+        } else {
+            head = head.next;
+            head.pre = null;
+        }
+        size--;
+        return value;
+    }
+
+    /**
+     * 从队列尾部弹出元素
+     * @return
+     */
+    public T pollTail() {
+        if (tail == null) {
+            return null;
+        }
+        T value = tail.value;
+        if (tail == head) {
+            tail = null;
+            head = null;
+        } else {
+            tail = tail.pre;
+            tail.next = null;
+        }
+        size--;
+        return value;
+    }
+
+    /**
+     * 获取队列头部的元素
+     * @return
+     */
+    public T peekHead() {
+        return head == null ? null : head.value;
+    }
+
+    /**
+     * 获取队列尾部的元素
+     * @return
+     */
+    public T peekTail(){
+        return tail == null ? null : tail.value;
+    }
 
 }
 

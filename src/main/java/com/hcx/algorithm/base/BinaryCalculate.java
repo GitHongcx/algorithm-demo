@@ -51,6 +51,17 @@ public class BinaryCalculate {
         return sum;
     }
 
+    public static int add1(int a ,int b){
+        //相同为0，不同为1，当两个要相加的时候，相同进位为0，不同1+0=0，缺少进位信息
+        int result = a ^ b;
+        // 相同为1，不同为0；相同进位，左移一位刚好为进位信息
+        int carry = (a & b) << 1;
+        if(carry!=0){
+            return add1(result,carry);
+        }
+        return result;
+    }
+
     /**
      * 减法
      *     1 0 1 0 0 1
@@ -119,6 +130,7 @@ public class BinaryCalculate {
         return lastSum;
     }
 
+
     /**
      * 除法 100110/110
      *              0 0 0 1 1    商
@@ -151,6 +163,45 @@ public class BinaryCalculate {
      * @return
      */
     public static int divide(int a, int b) {
+        if (a == Integer.MIN_VALUE && b == Integer.MIN_VALUE) {
+            return 1;
+        }
+        if (a != Integer.MIN_VALUE && b == Integer.MIN_VALUE) {
+            return 0;
+        }
+        if (a == Integer.MIN_VALUE) {
+            if (b == -1) {
+                return Integer.MAX_VALUE;
+            }
+            /**
+             * 系统最小值没办法取绝对值，使用分配律解决
+             *
+             * 要计算Integer.MIN_VALUE ÷ b：
+             * 先计算（Integer.MIN_VALUE+1）÷ b = c
+             * c*b = a
+             * [（Integer.MIN_VALUE+1）- a] / b = d
+             * 商=c+d
+             */
+            int i = divideNormal(add(a, 1), b);
+            int multiplyRes = multiply(i, b);
+            int minusRes = minus(a, multiplyRes);
+            int subRes = divideNormal(minusRes, b);
+            return add(i, subRes);
+        }
+        return divideNormal(a, b);
+    }
+
+    /**
+     * 正常除法（不包含系统最小）
+     * @param a
+     * @param b
+     * @return
+     */
+    private static int divideNormal(int a, int b) {
+        boolean negativeA = isNegative(a);
+        boolean negativeB = isNegative(b);
+        a = negativeA ? oppositeNum(a) : a;
+        b = negativeB ? oppositeNum(b) : b;
         int result = 0;
         for (int i = 30; i >= 0; i = minus(i, 1)) {
             if ((a >> i) >= b) {
@@ -159,11 +210,30 @@ public class BinaryCalculate {
                 a = minus(a, b << i); //a = a-(b<<i);
             }
         }
-        return result;
+        return negativeA != negativeB ? oppositeNum(result) : result;
+    }
+
+
+    /**
+     * 判断一个数是否是负数
+     * @param a
+     * @return
+     */
+    public static boolean isNegative(int a) {
+        return a < 0;
+    }
+
+    public static int oppositeNum(int a){
+        return ~a+1;
     }
 
 
     public static void main(String[] args) {
+        int i1 = add1(1, 1);
+        System.out.println(i1);
+
+
+
         int add = add(-6, 4);
         System.out.println(add);
 
@@ -175,7 +245,7 @@ public class BinaryCalculate {
         int multiply = multiply(a, b);
         System.out.println(multiply);
 
-        int divide = divide(20, 2);
+        int divide = divide(20, -2);
         System.out.println(divide);
     }
 

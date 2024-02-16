@@ -133,7 +133,7 @@ public class BinaryCalculate {
 
     /**
      * 除法 100110/110
-     *              0 0 0 1 1    商
+     *              0 0 0 1 1 0   商
      *             -------------
      * 除数b 1 1 0 ) 1 0 0 1 1 0           被除数a
      *                1 1 0                // 相当于b向左移动到不会超过a的位置b<=a 此位移动的次数i的位置上为1  a右移a>=b
@@ -223,6 +223,11 @@ public class BinaryCalculate {
         return a < 0;
     }
 
+    /**
+     * 取相反数
+     * @param a
+     * @return
+     */
     public static int oppositeNum(int a){
         return ~a+1;
     }

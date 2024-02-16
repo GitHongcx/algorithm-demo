@@ -1,5 +1,8 @@
 package com.hcx.algorithm.linkedlist;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * @Title: MergeList.java
  * @Package com.hcx.algorithm.linkedlist
@@ -69,6 +72,43 @@ public class MergeList {
         return head;
     }
 
+    /**
+     * 合并k个升序链表
+     * @param lists
+     * @return
+     */
+    public static ListNode mergeKSortedList(ListNode[] lists) {
+        if(lists == null || lists.length == 0){
+            return null;
+        }
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.val));
+        for (int i = 0; i < lists.length; i++) {
+            ListNode list = lists[i];
+            if(list!=null){
+                queue.add(list);
+            }
+        }
+        // 链表头
+        ListNode head = queue.poll();
+        ListNode cur = head;
+        if (head != null) {
+            ListNode headNext = head.next;
+            if(headNext!=null){
+                queue.add(headNext);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            ListNode ele = queue.poll();
+            cur.next = ele;
+            cur = ele;
+            if (ele.next != null) {
+                queue.add(ele.next);
+            }
+        }
+        return head;
+    }
+
     public static void main(String[] args) {
         ListNode listNode5 = new ListNode(5, null);
         ListNode listNode3 = new ListNode(3, listNode5);
@@ -78,10 +118,19 @@ public class MergeList {
         ListNode listNode4 = new ListNode(4, listNode6);
         ListNode listNode2 = new ListNode(2, listNode4);
 
-        System.out.println(listNode1);
-        System.out.println(listNode2);
-        ListNode listNode = mergeTwoSortedLists(listNode1, listNode2);
-        System.out.println(listNode);
+        ListNode listNode13 = new ListNode(10, null);
+        ListNode listNode12 = new ListNode(7, listNode13);
+        ListNode listNode11 = new ListNode(3, listNode12);
+
+//        System.out.println(listNode1);
+//        System.out.println(listNode2);
+//        ListNode listNode = mergeTwoSortedLists(listNode1, listNode2);
+//        System.out.println(listNode);
+        ListNode[] lists = new ListNode[]{listNode11,listNode2,listNode1};
+
+        ListNode listNode7 = mergeKSortedList(lists);
+        System.out.println("===================");
+        System.out.println(listNode7);
 
     }
 

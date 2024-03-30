@@ -15,7 +15,9 @@ public class MyFactorial {
         int num = 10;
         int factorial = factorial(num);
         System.out.println(factorial);
-
+        System.out.println("==============");
+        int mul = mul(5);
+        System.out.println(mul);
 
     }
 
@@ -35,5 +37,13 @@ public class MyFactorial {
              */
         }
         return addResult;
+    }
+
+    public static int mul(int n){
+        if(n==0){
+            return 1;
+        }else{
+            return mul(n-1)*n;
+        }
     }
 }

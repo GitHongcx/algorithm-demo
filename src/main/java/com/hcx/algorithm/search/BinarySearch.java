@@ -11,24 +11,175 @@ package com.hcx.algorithm.search;
 public class BinarySearch {
 
     public static void main(String[] args) {
-        int[] arr = new int[]{1,4,7,8,10,15};
+        int[] arr = new int[]{1, 4, 4, 4, 7, 8, 10, 15};
+        int i3 = binarySearchLeftMost(arr, 4);
+        int i4 = binarySearchRightMost(arr,4);
+        System.out.println("最左侧："+ i3+" 最右侧："+i4);
+
+
+        int index = binarySearchBasic(arr, 4);
+        System.out.println("基础版二分查找索引：" + index);
+
+        int i1 = 0;
+        int j1 = Integer.MAX_VALUE;
+        int mid1 = (i1 + j1) / 2;
+
+        int i2 = mid1 + 1;
+        int mid2 = (i2 + j1) / 2; //-536870912
+        int mid22 = ((i2 + (j1 - i2))+i2) / 2; //1073741823
+        int mid33 =  (i2 + j1) >>> 1;
+        System.out.println("最大值问题" + mid2 + " " + mid22 + " " + mid33);//最大值问题 -536870912   1073741823
+
+
         int resultIndex = searchNum(arr, 15);
-        int[] arr1 = new int[]{1,2,4,4,4,6,6,7,8,10,15};
+
+        int[] arr1 = new int[]{1, 2, 4, 4, 4, 6, 6, 7, 8, 10, 15};
         int i = searchLeftNum(arr1, 4);
-        System.out.println("大于等于4的最左边的元素下标是："+i);
+        System.out.println("大于等于4的最左边的元素下标是：" + i);
         System.out.println(arr1);
 
         int j = searchRightNum(arr1, 6);
-        System.out.println("小于等于4的最右边的元素下标是："+j);
+        System.out.println("小于等于4的最右边的元素下标是：" + j);
 
-        int[] arr2 = new int[]{3,2,3,2,3};
+        int[] arr2 = new int[]{3, 2, 3, 2, 3};
         int k = partMinIndex(arr2);
-        System.out.println("局部最小的小标是："+k);
+        System.out.println("局部最小的小标是：" + k);
 
-        int[] arr3 = new int[]{3,4,3,2,1};
+        int[] arr3 = new int[]{3, 4, 3, 2, 1};
         int peakElement = findPeakElement(arr3);
-        System.out.println("局部最大的下标是："+peakElement);
+        System.out.println("局部最大的下标是：" + peakElement);
     }
+
+
+    /**
+     * 二分查找基础版 左闭右闭
+     * @param arr
+     * @param target
+     * @return
+     */
+    public static int binarySearchBasic(int[] arr,int target) {
+        int i = 0;
+        int j = arr.length - 1;
+
+        while (i <= j) {
+            // int mid = (i + j) / 2;
+            int mid = (i + j) >>> 1;
+            if (target < arr[mid]) {
+                // 去到左区间查找
+                j = mid - 1;
+            } else if (target > arr[mid]) {
+                // 去到右区间查找
+                i = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 二分查找基础版 左闭右开
+     * @param arr
+     * @param target
+     * @return
+     */
+    public static int binarySearch(int[] arr,int target) {
+        int i = 0;
+        int j = arr.length;  // 第一处不同
+
+        while (i < j) {     // 第二处不同
+            int mid = (i + j) >>> 1;
+            if (target < arr[mid]) {
+                // 去到左区间查找
+                j = mid;   // 第三处不同
+            } else if (target > arr[mid]) {
+                // 去到右区间查找
+                i = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 平衡二分查找
+     * @param arr
+     * @param target
+     * @return
+     */
+    public static int balanceBinarySearch(int[] arr, int target) {
+        int i = 0;
+        int j = arr.length;
+        while (j - i > 1) {
+            //当i和j中间还有元素的时候就继续
+            int mid = (i + j) >>> 1;
+            if (target < arr[mid]) {
+                j = mid;
+            } else {
+                i = mid;
+            }
+        }
+        if (arr[i] == target) {
+            return i;
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * 二分查找，返回最左侧的目标元素
+     * @return
+     */
+    public static int binarySearchLeftMost(int[] arr, int target) {
+        int i = 0;
+        int j = arr.length - 1;
+        int candidate = -1 ;
+        while (i <= j) {
+            int mid = (i + j) >>> 1;
+            if (target < arr[mid]) {
+                // 去到左区间查找
+                j = mid - 1;
+            } else if (target > arr[mid]) {
+                // 去到右区间查找
+                i = mid + 1;
+            } else {
+                //相等了不立刻返回，而是找到最左侧的，再返回
+                candidate = mid;
+                //继续向左查找，看看是否还有相同的
+                j = mid - 1;
+            }
+        }
+        return candidate;
+    }
+
+    /**
+     * 二分查找，返回最右侧的目标元素
+     * @return
+     */
+    public static int binarySearchRightMost(int[] arr, int target) {
+        int i = 0;
+        int j = arr.length - 1;
+        int candidate = -1 ;
+        while (i <= j) {
+            int mid = (i + j) >>> 1;
+            if (target < arr[mid]) {
+                // 去到左区间查找
+                j = mid - 1;
+            } else if (target > arr[mid]) {
+                // 去到右区间查找
+                i = mid + 1;
+            } else {
+                //相等了不立刻返回，而是找到最右侧的，再返回
+                candidate = mid;
+                //继续向左查找，看看是否还有相同的
+                i = mid + 1;
+            }
+        }
+        return candidate;
+    }
+
+
 
     /**
      * 从有序数组中找到num

@@ -11,6 +11,13 @@ package com.hcx.algorithm.search;
 public class BinarySearch {
 
     public static void main(String[] args) {
+
+
+        int[] arr11 = new int[]{1, 2, 4, 4, 4, 7, 8};
+        int i5 = binarySearchLeftMost1(arr11, 4);
+        System.out.println(i5);
+
+
         int[] arr = new int[]{1, 4, 4, 4, 7, 8, 10, 15};
         int i3 = binarySearchLeftMost(arr, 4);
         int i4 = binarySearchRightMost(arr,4);
@@ -180,6 +187,50 @@ public class BinarySearch {
     }
 
 
+    /**
+     * 优化最左查找返回值
+     * @param arr
+     * @param target
+     * @return 返回大于等于目标的最靠左的索引
+     */
+    public static int binarySearchLeftMost1(int[] arr, int target) {
+        int i = 0;
+        int j = arr.length - 1;
+        while (i <= j) {
+            int mid = (i + j) >>> 1;
+            if (target <= arr[mid]) {
+                // 去到左区间查找
+                j = mid - 1;
+            } else {
+                // 去到右区间查找
+                i = mid + 1;
+            }
+        }
+        return i;
+    }
+
+
+    /**
+     * 优化最右查找返回值
+     * @param arr
+     * @param target
+     * @return 小于等于目标的最靠右的索引
+     */
+    public static int binarySearchRightMost1(int[] arr, int target) {
+        int i = 0;
+        int j = arr.length - 1;
+        while (i <= j) {
+            int mid = (i + j) >>> 1;
+            if (target < arr[mid]) {
+                // 去到左区间查找
+                j = mid - 1;
+            } else {
+                // 去到右区间查找
+                i = mid + 1;
+            }
+        }
+        return i - 1;
+    }
 
     /**
      * 从有序数组中找到num

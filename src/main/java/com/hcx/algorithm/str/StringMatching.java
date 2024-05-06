@@ -1,5 +1,6 @@
 package com.hcx.algorithm.str;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,21 +16,70 @@ import java.util.List;
 public class StringMatching {
 
     public static void main(String[] args) {
-        String[] strings = new String[]{"mass", "as", "hero", "superhero"};
+        //String[] strings = new String[]{"mass", "as", "hero", "superhero"};
+        String[] strings = new String[]{"leetcoder","leetcode","od","hamlet","am"};
+        boolean match = match("mass", "as");
+        //System.out.println(match);
+
         List<String> stringList = stringMatching(strings);
         for (int i = 0; i <stringList.size(); i++) {
             System.out.println(stringList.get(i));
         }
     }
 
-
+    /**
+     * 暴力破解
+     * @param words
+     * @return
+     */
     public static List<String> stringMatching(String[] words) {
+        List<String> resultList = new ArrayList<>();
         for (int i = 0; i < words.length; i++) {
-            for (int j = i+1; j < words.length; j++) {
-
+            for (int j = i + 1; j < words.length; j++) {
+                String word = words[i];
+                String word1 = words[j];
+                boolean result = word.length() > word1.length();
+                if (result) {
+                    if(match(word, word1)){
+                        if(!resultList.contains(word1)){
+                            resultList.add(word1);
+                        }
+                    }
+                } else {
+                    if(match(word1, word)){
+                        if(!resultList.contains(word)){
+                            resultList.add(word);
+                        }
+                    }
+                }
             }
         }
-        return null;
+        return resultList;
+    }
+
+    /**
+     * 判断subString是否是string的子串
+     * @param string
+     * @param subString
+     * @return
+     */
+    public static boolean match(String string, String subString) {
+        int strLength = string.length();
+        int subStrLength = subString.length();
+
+        for (int i = 0; i <= strLength - subStrLength; i++) { // mass
+            boolean flag = true;
+            for (int j = 0; j < subStrLength; j++) { // as
+                if (string.charAt(j + i) != subString.charAt(j)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

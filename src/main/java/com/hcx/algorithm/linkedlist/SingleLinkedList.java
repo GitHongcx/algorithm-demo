@@ -157,6 +157,28 @@ public class SingleLinkedList implements Iterable<Integer> {
     }
 
     /**
+     * 递归遍历
+     */
+    private static void loopRecursion(Consumer<Integer> before, Consumer<Integer> after) {
+        recursion(head, before, after);
+    }
+
+    /**
+     * 递归调用
+     * @param node
+     * @param before
+     * @param after
+     */
+    private static void recursion(SingleNode node, Consumer<Integer> before, Consumer<Integer> after) {
+        if (node == null) {
+            return;
+        }
+        before.accept(node.value);
+        recursion(node.next, before, after);
+        after.accept(node.value);
+    }
+
+    /**
      * 找到最后一个元素
      *
      * @return
@@ -180,6 +202,9 @@ public class SingleLinkedList implements Iterable<Integer> {
         SingleLinkedList.addFirst(4);
         SingleLinkedList.addFirst(5);
         SingleLinkedList.loopWhile(value -> System.out.println(value));
+        System.out.println("000000");
+        SingleLinkedList.loopRecursion(value -> System.out.println("before: "+value),value -> System.out.println("after: "+value));
+
         System.out.println("==================");
         SingleLinkedList.loopFor(value -> System.out.println(value));
         System.out.println("==================");

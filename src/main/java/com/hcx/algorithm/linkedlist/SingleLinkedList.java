@@ -1,6 +1,8 @@
 package com.hcx.algorithm.linkedlist;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -221,6 +223,7 @@ public class SingleLinkedList implements Iterable<Integer> {
         SingleLinkedList.loopWhile(value -> System.out.println(value));
 
         int i = 0;
+        List<Integer> list = new ArrayList<>();
 
 
         int nodeVal = getNodeVal(2);

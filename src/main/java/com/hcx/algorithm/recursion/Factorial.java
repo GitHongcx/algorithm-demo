@@ -1,11 +1,11 @@
 package com.hcx.algorithm.recursion;
 
 /**
- * @Title: Recursion.java
+ * @Title: Factorial.java
  * @Package com.hcx.algorithm.recursion
  * @Description: 求阶乘
  * @Author: hongcaixia
- * @Date: 2024/5/15 21:40
+ * @Date: 2024/5/15 13:09
  * @Version V1.0
  */
 public class Factorial {

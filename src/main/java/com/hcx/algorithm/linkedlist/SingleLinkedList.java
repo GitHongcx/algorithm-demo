@@ -165,6 +165,15 @@ public class SingleLinkedList implements Iterable<Integer> {
         recursion(head, before, after);
     }
 
+    private static void loop(SingleNode node) {
+        if (node == null) {
+            return;
+        }
+        System.out.println("before:" + node.value);
+        loop(node.next);
+        System.out.println("after:" + node.value);
+    }
+
     /**
      * 递归调用
      * @param node
@@ -198,11 +207,15 @@ public class SingleLinkedList implements Iterable<Integer> {
 
 
     public static void main(String[] args) {
-        SingleLinkedList.addFirst(1);
-        SingleLinkedList.addFirst(2);
-        SingleLinkedList.addFirst(3);
-        SingleLinkedList.addFirst(4);
-        SingleLinkedList.addFirst(5);
+
+        SingleLinkedList.addLast(1);
+        SingleLinkedList.addLast(2);
+        SingleLinkedList.addLast(3);
+        SingleLinkedList.addLast(4);
+        SingleLinkedList.addLast(5);
+        loop(findNode(0));
+        System.out.println("***************");
+
         SingleLinkedList.loopWhile(value -> System.out.println(value));
         System.out.println("000000");
         SingleLinkedList.loopRecursion(value -> System.out.println("before: "+value),value -> System.out.println("after: "+value));

@@ -236,6 +236,16 @@ public class BinarySearch {
     }
 
     /**
+     * 二分查找
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int binarySearch4(int[] nums, int target) {
+        return binarySearchRecursion(nums,target,0,nums.length-1);
+    }
+
+    /**
      * 递归查找
      * @param arr
      * @param target

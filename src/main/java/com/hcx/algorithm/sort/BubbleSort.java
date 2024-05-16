@@ -16,8 +16,70 @@ public class BubbleSort {
 
     public static void main(String[] args) {
         int[] arr = {5,8,1,0,3,2};
+        bubbleSortRecursion(arr,0);
+        System.out.println(arr);
+        System.out.println("******");
+
         myBubbleSort(arr);
         System.out.println(arr);
+    }
+
+    /**
+     * 递归冒泡
+     * @param arr
+     * @param right
+     */
+    public static void bubbleRecursion(int[] arr,int right) {
+        if (right == 0) {
+            return;
+        }
+        for (int i = 0; i < right; i++) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr, i, i + 1);
+            }
+        }
+        bubbleRecursion(arr, right - 1);
+    }
+
+    /**
+     * 递归冒泡优化
+     * @param arr
+     * @param right
+     */
+    public static void bubbleRecursion1(int[] arr,int right) {
+        if (right == 0) {
+            return;
+        }
+        int flag = 0;
+        for (int i = 0; i < right; i++) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr, i, i + 1);
+                flag = i;
+            }
+        }
+        bubbleRecursion1(arr, flag);
+    }
+
+    public static void bubbleSortRecursion(int[] arr,int i) {
+        if (i == arr.length) {
+            return;
+        }
+        for (int j = 0; j < arr.length - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr, j, j + 1);
+            }
+        }
+        bubbleSortRecursion(arr,i+1);
+    }
+
+    public static void bubbleSort1(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length - 1-i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
     }
 
     public static void myBubbleSort(int[] arr) {

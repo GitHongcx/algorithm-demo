@@ -17,9 +17,55 @@ public class InsertSort {
 
     public static void main(String[] args) {
         int[] arr = {5,8,1,0,3,2};
-        myInsertSort2(arr);
+        insertRecursion(arr,1);
         System.out.println(arr);
     }
+
+    /**
+     * 插入排序
+     * @param arr
+     */
+    public static void insert(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            //要插入的元素
+            int current = arr[i];
+            //要比较的索引
+            int j = i - 1;
+            //寻找比当前元素小的元素的位置
+            while (j >= 0 && arr[j] > current) {
+                //依次空出一个位置
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            //要插入的位置
+            arr[j + 1] = current;
+        }
+    }
+
+    /**
+     * 递归插入排序
+     * @param arr
+     * @param insertEleIndex 要开始准备插入的元素的索引
+     */
+    public static void insertRecursion(int[] arr,int insertEleIndex) {
+        if (insertEleIndex == arr.length) {
+            return;
+        }
+        //要插入的元素
+        int current = arr[insertEleIndex];
+        //要比较的索引
+        int j = insertEleIndex - 1;
+        //寻找比当前元素小的元素的位置
+        while (j >= 0 && arr[j] > current) {
+            //依次空出一个位置
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        //要插入的位置
+        arr[j + 1] = current;
+        insertRecursion(arr, insertEleIndex + 1);
+    }
+
 
     public static void myInsertSort2(int[] arr) {
         for (int i = 1; i < arr.length; i++) {

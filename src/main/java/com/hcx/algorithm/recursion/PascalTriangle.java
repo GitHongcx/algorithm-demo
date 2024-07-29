@@ -58,7 +58,7 @@ public class PascalTriangle {
 
 
     /**
-     * 递归优化
+     * 递归优化 使用记忆法
      * @param numRows
      * @return
      */
@@ -99,6 +99,67 @@ public class PascalTriangle {
         }
         arr[i][j] = elementCache(i - 1, j - 1, arr) + elementCache(i - 1, j, arr);
         return arr[i][j];
+    }
+
+
+    /**
+     * 计算rowNum行元素 动态规划
+     * @param arr 上一行的元素
+     * @param rowNum
+     * @return
+     */
+    public static void dynamicElement(int[] arr,int rowNum) {
+        if (rowNum == 0) {
+            arr[0] = 1;
+            return;
+        }
+        /**
+         * 1             rowNum=0
+         * 1  1          rowNum=1
+         * 1  2  1       rowNum=2
+         * 1  3  3  1    rowNum=3     arr=4
+         * 1  4  6  4  1 rowNum=4
+         */
+        //求出第n行的所有元素 原本arr[0]都是1 所以不用管
+        for (int i = rowNum; i > 0; i--) {
+            arr[i] = arr[i] + arr[i - 1];
+        }
+    }
+
+//    public static void dynamicElement(List<Integer> list,int rowNum){
+//        if (rowNum == 0) {
+//            list.add(1);
+//            return;
+//        }
+//        //求出第n行的所有元素
+//        for (int i = rowNum; i > 0; i--) {
+//            list.add(i,list.get(i-1) + list.get(i));
+//        }
+//    }
+
+    /**
+     * 递归优化 使用动态规划
+     * @param numRows
+     * @return
+     */
+    public static List<List<Integer>> generateDynamic(int numRows) {
+        List<List<Integer>> lists = new ArrayList<>();
+        //行初始化为numRows
+        //List<Integer> rowList = new ArrayList<>();
+        int[] rowArr = new int[numRows];
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> list = new ArrayList<>();
+            //求第i行元素
+            dynamicElement(rowArr, i);
+            //这里有瑕疵 又要把数组转成List
+            for (int k : rowArr) {
+                if (k != 0) {
+                    list.add(k);
+                }
+            }
+            lists.add(list);
+        }
+        return lists;
     }
 
     /**
@@ -166,7 +227,7 @@ public class PascalTriangle {
     }
 
     /**
-     * 迭代
+     * 纯迭代
      * @param numRows
      * @return
      */
@@ -235,6 +296,17 @@ public class PascalTriangle {
             }
         }
 
+        System.out.println("*********************");
+
+        List<List<Integer>> lists2 = generateDynamic(5);
+
+        for (int i = 0; i < lists2.size(); i++) {
+            List<Integer> list = lists2.get(i);
+
+            for (int j = 0; j < list.size(); j++) {
+                System.out.println(list.get(j));
+            }
+        }
 
     }
 

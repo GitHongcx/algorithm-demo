@@ -31,6 +31,86 @@ import java.util.List;
 public class Hanota {
 
     /**
+     * 分析：
+     *
+     * @param A
+     * @param B
+     * @param C
+     */
+    private static void remove(List<Integer> A, List<Integer> B, List<Integer> C){
+        //A中只有一个 A直接移动到C
+        /**
+         * A有1个：
+         * A->C
+         */
+        C.add(A.remove(A.size()-1));
+
+        /**
+         * A有2个：A移动到C
+         * A->B
+         * A->C
+         * B->C
+         */
+        remove(A,C,B);
+        remove(A,B,C);
+        remove(B,A,C);
+
+        /**
+         * A有3个：
+         * A移动到B : A->B
+         * A->C
+         * A->B
+         * C->B
+         * ==== 前两个已经从A移动到了B（2个的情况）
+         * A->C
+         * ==== 第三个从A移动到了C（1个的情况）
+         * B移动到C : B->C
+         * B->A
+         * B->C
+         * A->C
+         * ==== 前两个从B移动到了C（2个的情况）
+         *
+         * 把3个的情况简化成两个：
+         * 前两个圆盘看做是一个：
+         * A->B
+         * A->C
+         * B->C
+         * 所以这个操作就是2个圆盘的操作
+         *
+         */
+
+
+    }
+
+    public static void honata(int count,List<Integer> A, List<Integer> B, List<Integer> C) {
+        if (count == 0) {
+            return;
+        }
+        honata(count - 1, A, C, B);
+        C.add(A.remove(A.size() - 1));
+        honata(count - 1, B, A, C);
+
+    }
+
+    /**
+     * //        //A->B (前n-1个)
+     * //        B.add(A.remove(A.size() - 1));
+     * //
+     * //        //A->C (第n个)
+     * //        C.add(A.remove(A.size() - 1));
+     * //
+     * //        //B->C (前n-1个)
+     * //        C.add(B.remove(B.size() - 1));
+     * //
+     * //
+     * //        honata(count - 1, A, C, B);
+     * //        honata(count - 1, A, B, C);
+     * //        honata(count - 1, B, A, C);
+     */
+
+
+
+    /**
      * A:[1,0]
      * @param A
      * @param B
@@ -84,12 +164,10 @@ public class Hanota {
         // B.add(A.remove(A.size()));
         System.out.println("前面第n-1个递归开始");
         remove(count - 1, A, C, B);
-        System.out.println("前面第n-1个递归结束");
         // A->C 第n个
 
         System.out.println("第n个递归开始");
         C.add(A.remove(A.size() - 1));
-        System.out.println("第n个递归结束");
 
         // B->C 前n-1个
         //C.add(B.remove(B.size()-1));
@@ -98,21 +176,25 @@ public class Hanota {
         System.out.println("后面第n-1个递归结束");
     }
 
-
-
     public static void main(String[] args) {
         List<Integer> A  = new ArrayList<>(3);
-
+        A.add(3);
         A.add(2);
         A.add(1);
-        A.add(0);
-
         List<Integer> B  = new ArrayList<>(3);
         List<Integer> C  = new ArrayList<>(3);
 
-        hanota(A,B,C);
+//        List<Integer> A  = new ArrayList<>(2);
+//        A.add(2);
+//        A.add(1);
+//        List<Integer> B  = new ArrayList<>(2);
+//        List<Integer> C  = new ArrayList<>(2);
+
 
         //hanota(A,B,C);
+
+        //hanota(A,B,C);
+        honata(3,A,B,C);
 
         System.out.println(C);
     }

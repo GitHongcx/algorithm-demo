@@ -89,10 +89,6 @@ public class DeleteDuplicates {
 
 
 
-
-
-
-
     public static ListNode deleteDuplicates2Recursion(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -132,44 +128,73 @@ public class DeleteDuplicates {
 
     /**
      * 给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表 。
-     * @param head
+     * @param head [1,1,1,2,3]
      * @return
      */
     public static ListNode deleteDuplicates2(ListNode head) {
-        if(head == null || head.next == null){
+        if (head == null || head.next == null) {
             return head;
         }
+        ListNode sentinel = new ListNode(-200, head);
+        ListNode pointer1 = sentinel;
+        ListNode pointer2 = head;
+        ListNode pointer3 = head.next;
 
-        ListNode pointer1 = head;
-        ListNode pointer2 = head.next;
-
-        // 1 2 2 3 4 5
-        while(pointer2 != null){
-            if(pointer1.val == pointer2.val){
-                //point2 = point2.next;
-                while(pointer1.val==pointer2.val){
-                    pointer1.next = pointer2.next;
-                    pointer2 = pointer2.next;
+        //1 2 3 3 4 4 5
+        while (pointer2 != null && pointer3 !=null) {
+            if (pointer2.val == pointer3.val) {
+                pointer3 = pointer3.next;
+                // 如果2和3相等，继续把3向后移动
+                while (pointer3 != null && pointer2.val == pointer3.val) {
+                    pointer3 = pointer3.next;
                 }
+                pointer1.next = pointer3;
+                pointer2 = pointer1.next;
+                if(pointer2 != null){
+                    pointer3 = pointer2.next;
+                }
+            } else {
                 pointer1 = pointer1.next;
-                pointer2 = pointer2.next;
-                // pointer1.next = pointer2.next;
-                // pointer2 = pointer2.next;
-                // pointer3 = pointer1;
-            }else{
-                pointer1 = pointer1.next;
-                pointer2 = pointer2.next;
+                pointer2 = pointer1.next;
+                pointer3 = pointer2.next;
             }
         }
-        return head;
+        return sentinel.next;
+    }
+
+
+    public static ListNode deleteDuplicates3(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode sentinel = new ListNode(-200, head);
+        ListNode pointer1 = sentinel;
+        ListNode pointer2;
+        ListNode pointer3;
+
+        //1 2 3 3 4 4 5
+        while ((pointer2 = pointer1.next) != null && (pointer3 = pointer2.next) != null) {
+            if (pointer2.val == pointer3.val) {
+
+                while ((pointer3 = pointer3.next) != null && pointer2.val == pointer3.val) {
+
+                }
+                pointer1.next = pointer3;
+            } else {
+                pointer1 = pointer1.next;
+            }
+        }
+        return sentinel.next;
     }
 
     public static void main(String[] args) {
         // 1 2 2 3 4
-//        ListNode node5 = new ListNode(3, null);
-//        ListNode node4 = new ListNode(2, node5);
-//        ListNode node3 = new ListNode(1, node4);
-//        ListNode node2 = new ListNode(1, node3);
+//        ListNode node7 = new ListNode(5, null);
+//        ListNode node6 = new ListNode(4, node7);
+//        ListNode node5 = new ListNode(4, node6);
+//        ListNode node4 = new ListNode(3, node5);
+//        ListNode node3 = new ListNode(3, node4);
+//        ListNode node2 = new ListNode(2, node3);
 //        ListNode node1 = new ListNode(1, node2);
 //        ListNode node0 = new ListNode(-200, node1);
 
@@ -177,8 +202,7 @@ public class DeleteDuplicates {
         ListNode node1 = new ListNode(1, node2);
 
         //ListNode sentinel = new ListNode(-200,node1);
-        ListNode listNode = deleteDuplicates2Recursion(node1);
-        listNode = listNode.next;
+        ListNode listNode = deleteDuplicates2(node1);
         System.out.println("------------------");
 
         System.out.println(listNode.val);

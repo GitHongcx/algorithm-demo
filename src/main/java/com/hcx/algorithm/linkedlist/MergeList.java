@@ -14,6 +14,61 @@ import java.util.PriorityQueue;
 public class MergeList {
 
     /**
+     * Leetcode21: 合并两个有序链表 递归
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public static ListNode mergeTwoSortedListsRecursion(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        if (list1.val < list2.val) {
+            ListNode listNode = mergeTwoSortedListsRecursion(list1.next, list2);
+            list1.next = listNode;
+            return list1;
+        } else {
+            ListNode listNode = mergeTwoSortedListsRecursion(list1, list2.next);
+            list2.next = listNode;
+            return list2;
+        }
+    }
+
+
+    /**
+     * Leetcode21: 合并两个有序链表
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public static ListNode mergeTwoSortedLists1(ListNode list1, ListNode list2) {
+        ListNode sentinel = new ListNode(-1, null);
+        ListNode pointer = sentinel;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                pointer.next = list1;
+                list1 = list1.next;
+            } else {
+                pointer.next = list2;
+                list2 = list2.next;
+            }
+            pointer = pointer.next;
+        }
+        if (list1 != null) {
+            pointer.next = list1;
+        }
+        if (list2 != null) {
+            pointer.next = list2;
+        }
+        return sentinel.next;
+    }
+
+
+
+    /**
      * 合并两个有序链表
      *
      * @param list1

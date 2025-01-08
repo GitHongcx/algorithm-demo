@@ -14,7 +14,39 @@ import java.util.PriorityQueue;
 public class MergeList {
 
     /**
-     * Leetcode21: 合并两个有序链表 递归
+     * 合并k个升序链表
+     * @param lists
+     * @return
+     */
+    public static ListNode mergeKListsRecursion(ListNode[] lists) {
+        if (lists == null) {
+            return null;
+        }
+        return split(lists, 0, lists.length - 1);
+    }
+
+    /**
+     * 把k个链表依次拆解，拆到只剩下一个，两两合并
+     * @param lists
+     * @param i
+     * @param j
+     * @return
+     */
+    public static ListNode split(ListNode[] lists,int i,int j) {
+        // 拆到数组中只剩下一个元素时终止递归 此时i和j重合
+        if (i == j) {
+            return lists[i];
+        }
+        int mid = (i+j) >>> 1;
+        ListNode left = split(lists, i, mid);
+        ListNode right = split(lists, mid+1, j);
+        //合并后的链表
+        ListNode listNode = mergeTwoSortedListsRecursion(left, right);
+        return listNode;
+    }
+
+    /**
+     * Leetcode21: 合并两个有序链表【递归】
      * @param list1
      * @param list2
      * @return
@@ -165,6 +197,15 @@ public class MergeList {
     }
 
     public static void main(String[] args) {
+
+        ListNode listNode19 = new ListNode(9, null);
+        ListNode listNode18 = new ListNode(6, listNode19);
+        ListNode listNode17 = new ListNode(4, listNode18);
+
+        ListNode listNode9 = new ListNode(4, null);
+        ListNode listNode8 = new ListNode(2, listNode9);
+        ListNode listNode7 = new ListNode(1, listNode8);
+
         ListNode listNode5 = new ListNode(5, null);
         ListNode listNode3 = new ListNode(3, listNode5);
         ListNode listNode1 = new ListNode(1, listNode3);
@@ -181,9 +222,9 @@ public class MergeList {
 //        System.out.println(listNode2);
 //        ListNode listNode = mergeTwoSortedLists(listNode1, listNode2);
 //        System.out.println(listNode);
-        ListNode[] lists = new ListNode[]{listNode11,listNode2,listNode1};
+        ListNode[] lists = new ListNode[]{listNode11,listNode2,listNode1,listNode7,listNode17};
 
-        ListNode listNode7 = mergeKSortedList(lists);
+        ListNode listNode70 = mergeKListsRecursion(lists);
         System.out.println("===================");
         System.out.println(listNode7);
 

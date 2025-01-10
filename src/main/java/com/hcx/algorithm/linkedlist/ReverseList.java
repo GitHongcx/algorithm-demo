@@ -1,5 +1,9 @@
 package com.hcx.algorithm.linkedlist;
 
+import com.hcx.algorithm.recursion.RecursionDemo;
+
+import java.util.List;
+
 /**
  * @Title: ReverseList.java
  * @Package com.hcx.algorithm.linkedlist
@@ -27,6 +31,64 @@ public class ReverseList {
         }
         return node;
     }
+
+    /**
+     * 创建新的链表实现翻转
+     * @param head
+     * @return
+     */
+    public static ListNode reverseList0(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode newHead = null;
+        ListNode pointer = head;
+
+        while (pointer.next != null) {
+            newHead = new ListNode(pointer.val,newHead);
+            pointer = pointer.next;
+        }
+        return newHead;
+    }
+
+    /**
+     * 不创建新节点，把旧链表的节点移动到新的链表
+     * @param head
+     * @return
+     */
+    public static ListNode reverseList01(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        // 新链表
+        ListNode newHead = head;
+        while (head.next != null) {
+            // 当前元素的下一个元素 即 要移动的元素
+            ListNode temp = head.next;
+            head.next = temp.next;
+
+            // 移动的元素的next指向新链表的头
+            temp.next = newHead;
+            // 新链表的头重新指向到当前移动的元素
+            newHead = temp;
+        }
+        return newHead;
+    }
+
+    public static ListNode reverseList02(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        //递归最后一层结束后，来到倒数第二调用的下一行 此时为倒数第二个元素
+        ListNode last = reverseList02(head.next);
+        // last.next.next: 最后一个元素的next
+        // last：倒数第二个元素
+        head.next.next = head;
+        head.next = null;
+        return last;
+    }
+
 
     /**
      * 反转单向链表：双指针法
@@ -83,14 +145,58 @@ public class ReverseList {
         return pre;
     }
 
+
+
+
     public static void main(String[] args) {
-        Node node1 = new Node(1);
-        node1.next = new Node(2);
-        node1.next.next = new Node(3);
-        Node node = reverseList(node1);
-        System.out.println(node.value);
+
+        ListNode node5 = new ListNode(4,null);
+        ListNode node4 = new ListNode(3,node5);
+        ListNode node3 = new ListNode(2,node4);
+        ListNode node2 = new ListNode(2,node3);
+        ListNode node1 = new ListNode(1,node2);
+
+        System.out.println(node1.val);
+        System.out.println(node1.next.val);
+        System.out.println(node1.next.next.val);
+        System.out.println(node1.next.next.next.val);
+        System.out.println(node1.next.next.next.next.val);
+
+        ListNode node = null;
+                //removeElements(node1, 2);
+        System.out.println("-===============-");
+
+        System.out.println(node.val);
+        System.out.println(node.next.val);
+        System.out.println(node.next.next.val);
+        System.out.println(node.next.next.next.val);
+
+        System.out.println("||||||||||||||||||||");
+
+//        Node node1 = new Node(1);
+//        node1.next = new Node(2);
+//        node1.next.next = new Node(3);
+//        Node node = reverseList(node1);
+//        System.out.println(node.value);
         //System.out.println(node.value+" "+node.next.value+" "+node.next.next.value);
     }
 
+
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
 
 }

@@ -12,25 +12,6 @@ import java.util.Iterator;
  */
 public class SentinelDoubleLinkedList implements Iterable<Integer> {
 
-    @Override
-    public Iterator<Integer> iterator() {
-        return new Iterator<Integer>() {
-            DoubleNode pointer = head.next;
-
-            @Override
-            public boolean hasNext() {
-                return pointer != tail;
-            }
-
-            @Override
-            public Integer next() {
-                Integer value = pointer.value;
-                pointer = pointer.next;
-                return value;
-            }
-        };
-    }
-
     static class DoubleNode {
         DoubleNode pre;
         int value;
@@ -59,6 +40,26 @@ public class SentinelDoubleLinkedList implements Iterable<Integer> {
         head.next = tail;
         tail.pre = head;
     }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return new Iterator<Integer>() {
+            DoubleNode pointer = head.next;
+
+            @Override
+            public boolean hasNext() {
+                return pointer != tail;
+            }
+
+            @Override
+            public Integer next() {
+                Integer value = pointer.value;
+                pointer = pointer.next;
+                return value;
+            }
+        };
+    }
+
 
     /**
      * 根据索引查找节点

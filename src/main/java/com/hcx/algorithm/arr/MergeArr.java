@@ -14,6 +14,120 @@ package com.hcx.algorithm.arr;
 public class MergeArr {
 
     /**
+     * 递归合并数组数组中两个有序区间的元素，把两个有序区间的元素合并为一个有序的数组
+     * @param arr1   本来的数组
+     * @param start1 第一个有序区间的起点
+     * @param end1   第一个有序区间的终点
+     * @param start2 第二个有序区间的起点
+     * @param end2   第二个有序区间的终点
+     * @param arr2   新的数组
+     */
+    public static void mergeArrRecursion(int[] arr1, int start1,int end1,int start2,int end2,int[] arr2,int index) {
+        if (start1 > end1 || start2 > end2) {
+            if (start1 <= end1) {
+                while (start1 <= end1) {
+                    arr2[index] = arr1[start1++];
+                    index++;
+                }
+            }
+            if (start2 <= end2) {
+                while (start2 <= end2) {
+                    arr2[index] = arr1[start2++];
+                    index++;
+                }
+            }
+            return;
+        }
+
+        if (arr1[start1] < arr1[start2]) {
+            arr2[index] = arr1[start1];
+            mergeArrRecursion(arr1, start1 + 1, end1, start2, end2, arr2, index + 1);
+        } else {
+            arr2[index] = arr1[start2];
+            mergeArrRecursion(arr1, start1, end1, start2 + 1, end2, arr2, index + 1);
+        }
+    }
+
+
+    /**
+     * 合并数组数组中两个有序区间的元素，把两个有序区间的元素合并为一个有序的数组
+     * @param arr1
+     * @param start1
+     * @param end1
+     * @param start2
+     * @param end2
+     * @param arr2
+     */
+    public static void mergeArr(int[] arr1, int start1,int end1,int start2,int end2,int[] arr2){
+        int index = 0;
+        while (start1 <= end1 && start2 <= end2) {
+            if(arr1[start1]<arr1[start2]){
+                arr2[index] = arr1[start1++];
+                index++;
+            }else{
+                arr2[index] = arr1[start2++];
+                index++;
+            }
+        }
+        if(start1 <= end1){
+            // 第一个区间没遍历完
+            while (start1 <= end1) {
+                arr2[index] = arr1[start1++];
+                index++;
+            }
+        }
+        if(start2 <= end2){
+            // 第二个区间没遍历完
+            while (start2 <= end2) {
+                arr2[index] = arr1[start2++];
+                index++;
+            }
+        }
+    }
+
+    public static void merge1(int[] nums1, int m, int[] nums2, int n) {
+        int index = m + n - 1;
+        int index1 = m - 1;
+        int index2 = n - 1;
+        while (index1 >= 0 && index2 >= 0) {
+            int num1 = nums1[index1];
+            int num2 = nums2[index2];
+            if (num2 > num1) {
+                nums1[index] = num2;
+                index2--;
+            } else {
+                nums1[index] = num1;
+                index1--;
+            }
+            index--;
+        }
+
+        // 针对index1 剩余的 小的不用管 因为本身就是要放在num1中
+        while(index2>=0){
+            nums1[index] = nums2[index2];
+            index2--;
+            index--;
+        }
+    }
+
+    public static void main(String[] args) {
+//        int[] nums1 = new int[]{1,2,3,0,0,0};
+//        int[] nums2 = new int[]{2,5,6};
+//
+//        merge1(nums1,3,nums2,3);
+
+        int[] nums1 = new int[]{1,2,3,2,5,6,10,14};
+        int[] nums2 = new int[nums1.length];
+
+        //mergeArrRecursion(nums1,0,2,3,7,nums2,0);
+        mergeArr(nums1,0,2,3,7,nums2);
+
+
+        System.out.println(nums2);
+
+    }
+
+    /**
      * 合并两个非递减顺序 排列的整数数组
      * 输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
      * 输出：[1,2,2,3,5,6]

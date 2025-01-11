@@ -68,6 +68,23 @@ public class CircularArrayQueue2<E> implements Queue<E>,Iterable<E> {
         return size == arr.length;
     }
 
+    // 获取队尾元素
+    public E rear() {
+        if (isEmpty()) {
+            return null;
+        }
+        return arr[(tail - 1 + arr.length) % arr.length];
+    }
+
+    // 从队首获取元素
+    public E front() {
+        if (isEmpty()) {
+            return null;
+        }
+        return arr[head];
+    }
+
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
@@ -87,5 +104,21 @@ public class CircularArrayQueue2<E> implements Queue<E>,Iterable<E> {
                 return e;
             }
         };
+    }
+
+    public static void main(String[] args) {
+        CircularArrayQueue2 circularArrayQueue2 = new CircularArrayQueue2(3);
+        circularArrayQueue2.offer(1);
+        circularArrayQueue2.offer(2);
+        circularArrayQueue2.offer(3);
+        circularArrayQueue2.offer(4);
+        System.out.println(circularArrayQueue2.rear());
+        circularArrayQueue2.rear();  // 返回 3
+        circularArrayQueue2.isFull();  // 返回 true
+        circularArrayQueue2.poll();  // 返回 true
+        circularArrayQueue2.offer(4);  // 返回 true
+        circularArrayQueue2.rear();  // 返回 4
+
+
     }
 }

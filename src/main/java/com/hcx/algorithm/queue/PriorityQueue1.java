@@ -47,8 +47,8 @@ public class PriorityQueue1<E extends Priority> implements Queue<E> {
         if (maxIndex < size - 1) {
             System.arraycopy(array, maxIndex + 1, array, maxIndex, size - maxIndex - 1);
         }
-        array[maxIndex] = null;
-        size--;
+        // help gc
+        array[--size] = null;
         return e;
     }
 

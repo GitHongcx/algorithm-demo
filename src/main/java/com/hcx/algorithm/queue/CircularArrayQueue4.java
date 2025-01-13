@@ -104,6 +104,11 @@ public class CircularArrayQueue4<E> implements Queue<E>,Iterable<E> {
                 pointer++;
                 return e;
             }
+
+            @Override
+            public void remove() {
+
+            }
         };
     }
 }

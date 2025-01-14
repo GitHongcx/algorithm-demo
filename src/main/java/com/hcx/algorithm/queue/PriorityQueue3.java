@@ -91,11 +91,11 @@ public class PriorityQueue3<E extends Priority> implements Queue<E> {
         // 父节点索引 先假设本身的优先级最高，如果有比他高的 就替换掉他
         int maxIndex = parentIndex;
 
-        if (leftChildIndex < size && array[leftChildIndex].getPriority() > array[parentIndex].getPriority()) {
+        if (leftChildIndex < size && array[leftChildIndex].getPriority() > array[maxIndex].getPriority()) {
             // 左孩子节点的优先级比父节点大，将maxIndex 设置为左孩子索引
             maxIndex = leftChildIndex;
         }
-        if (rightChildIndex < size && array[rightChildIndex].getPriority() > array[parentIndex].getPriority()) {
+        if (rightChildIndex < size && array[rightChildIndex].getPriority() > array[maxIndex].getPriority()) {
             // 右孩子节点的优先级比父节点大，将maxIndex设置为右孩子索引
             maxIndex = rightChildIndex;
         }

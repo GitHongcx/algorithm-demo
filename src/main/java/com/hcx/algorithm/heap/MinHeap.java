@@ -149,4 +149,8 @@ public class MinHeap {
             downToProper(i);
         }
     }
+
+    public boolean isFull() {
+        return size == arr.length;
+    }
 }

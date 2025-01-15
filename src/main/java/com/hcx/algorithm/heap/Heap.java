@@ -15,21 +15,21 @@ public class Heap {
     int size;
 
     // 是否是大顶堆
-    boolean max;
+    boolean maxHeapFlag;
 
     public int size() {
         return size;
     }
 
-    public Heap(int capacity, boolean max) {
+    public Heap(int capacity, boolean maxHeapFlag) {
         this.arr = new int[capacity];
-        this.max = max;
+        this.maxHeapFlag = maxHeapFlag;
     }
 
-    public Heap(int[] arr, boolean max) {
+    public Heap(int[] arr, boolean maxHeapFlag) {
         this.arr = arr;
         this.size = arr.length;
-        this.max = max;
+        this.maxHeapFlag = maxHeapFlag;
         heapify();
     }
 
@@ -111,7 +111,7 @@ public class Heap {
         while (childIndex > 0) {
             // 计算他的父节点下标
             int parentIndex = (childIndex - 1) >> 1;
-            boolean compare = max ? offered > arr[parentIndex] : offered < arr[parentIndex];
+            boolean compare = maxHeapFlag ? offered > arr[parentIndex] : offered < arr[parentIndex];
             if (compare) {
                 // 父节点往下移动
                 arr[childIndex] = arr[parentIndex];
@@ -135,11 +135,11 @@ public class Heap {
         // 计算左右孩子节点
         int leftChildIndex = 2 * index + 1;
 
-        if ((leftChildIndex < size) && (max ? arr[leftChildIndex] > arr[minIndex] : arr[leftChildIndex] < arr[minIndex])) {
+        if ((leftChildIndex < size) && (maxHeapFlag ? arr[leftChildIndex] > arr[minIndex] : arr[leftChildIndex] < arr[minIndex])) {
             minIndex = leftChildIndex;
         }
         int rightChildIndex = leftChildIndex + 1;
-        if ((rightChildIndex < size) && (max ? arr[rightChildIndex] > arr[minIndex] : arr[rightChildIndex] < arr[minIndex])) {
+        if ((rightChildIndex < size) && (maxHeapFlag ? arr[rightChildIndex] > arr[minIndex] : arr[rightChildIndex] < arr[minIndex])) {
             minIndex = rightChildIndex;
         }
         // 找到了更大的孩子 交换元素

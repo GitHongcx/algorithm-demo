@@ -1,5 +1,7 @@
 package com.hcx.algorithm.heap;
 
+import java.util.PriorityQueue;
+
 /**
  * @Title: MedianFinder.java
  * @Package com.hcx.algorithm.heap
@@ -40,12 +42,41 @@ public class MedianFinder {
         }
     }
 
+    // 使用优先级队列 默认是小顶堆
+
+    // 存储前半部分元素
+    static PriorityQueue<Integer> maxQueue = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+
+    // 存储后半部分元素
+    static PriorityQueue<Integer> minQueue = new PriorityQueue<>();
+
+
+    public static void addNum1(int num) {
+        if (minQueue.size() == maxQueue.size()) {
+            minQueue.offer(num);
+            maxQueue.offer(minQueue.poll());
+        } else {
+            // 往右边加 加在右边的要保证是大的
+            maxQueue.offer(num);
+            minQueue.offer(maxQueue.poll());
+        }
+    }
+
+    public static double findMedian1() {
+        if (maxQueue.size() == minQueue.size()) {
+            return (maxQueue.peek() + minQueue.peek()) / 2.0;
+        } else {
+            return maxQueue.peek();
+        }
+    }
+
 
     public static void main(String[] args) {
-        System.out.println(findMedian());
-        addNum(0);
-        addNum(0);
-        System.out.println(findMedian());
 
+        addNum1(1);
+        //addNum1(2);
+        System.out.println(findMedian1());
+        //addNum1(3);
+        //System.out.println(findMedian1());
     }
 }

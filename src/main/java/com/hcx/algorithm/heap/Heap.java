@@ -52,7 +52,7 @@ public class Heap {
      */
     public int poll() {
         int top = arr[0];
-        swap(0, top - 1);
+        swap(0, size - 1);
         size--;
 
         // 对堆顶元素依次执行下沉操作到正确位置
@@ -135,11 +135,11 @@ public class Heap {
         // 计算左右孩子节点
         int leftChildIndex = 2 * index + 1;
 
-        if (leftChildIndex < size && max ? arr[leftChildIndex] > arr[minIndex] : arr[leftChildIndex] < arr[minIndex]) {
+        if ((leftChildIndex < size) && (max ? arr[leftChildIndex] > arr[minIndex] : arr[leftChildIndex] < arr[minIndex])) {
             minIndex = leftChildIndex;
         }
         int rightChildIndex = leftChildIndex + 1;
-        if (rightChildIndex < size && max ? arr[rightChildIndex] > arr[minIndex] : arr[rightChildIndex] < arr[minIndex]) {
+        if ((rightChildIndex < size) && (max ? arr[rightChildIndex] > arr[minIndex] : arr[rightChildIndex] < arr[minIndex])) {
             minIndex = rightChildIndex;
         }
         // 找到了更大的孩子 交换元素

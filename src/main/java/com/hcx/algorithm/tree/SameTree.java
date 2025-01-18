@@ -48,8 +48,8 @@ public class SameTree {
         treeNode1.left.left = new TreeNode(4);
         treeNode1.left.right = new TreeNode(5);
 //
-//        treeNode1.right.left = new TreeNode(6);
-//        treeNode1.right.right = new TreeNode(7);
+//        treeNode1.right.left = new BSTTreeNode(6);
+//        treeNode1.right.right = new BSTTreeNode(7);
 
         boolean sameTree = isSameTree(treeNode, treeNode1);
         System.out.println(sameTree);

@@ -1,5 +1,7 @@
 package com.hcx.algorithm.tree;
 
+import java.util.ArrayList;
+
 /**
  * @Title: BSTTree.java
  * @Package com.hcx.algorithm.tree
@@ -279,6 +281,7 @@ public class BSTTree {
         return deletedParent.value;
     }
 
+
     /**
      * 托付方法:把孩子托付给父亲(只改变了父亲的指向)
      * @param parent  被删除节点的父亲
@@ -300,6 +303,84 @@ public class BSTTree {
         }
     }
 
+
+    public Object deleteRecursive(int key) {
+        // 保存被删除节点的值
+        ArrayList<Object> deletedList = new ArrayList<>();
+        root = doDeleteRecursive(root, key, deletedList);
+        return deletedList.isEmpty() ? null : deletedList.get(0);
+    }
+
+
+    /**
+     * 递归删除节点
+     * @param node 查找删除节点的起点
+     * @param key 被删除的key
+     * @return 被删除节点后续节点
+     */
+    public BSTTreeNode doDeleteRecursive(BSTTreeNode node, int key,ArrayList<Object> deletedList) {
+        // 没找到待删除节点
+        if (node == null) {
+            return null;
+        }
+        // 在左子树找key
+        if (key < node.key) {
+            // 父亲指向被删除节点后续的节点
+            node.left = doDeleteRecursive(node.left, key,deletedList);
+            return node;
+        }
+        // 在右子树找key
+        else if (key > node.key) {
+            node.right = doDeleteRecursive(node.right, key,deletedList);
+            return node;
+        }
+        deletedList.add(node.value);
+        //找到了被删除的节点 开始删除
+        // 1.只有左孩子
+        if (node.left != null) {
+            // 返回左孩子
+            return node.left;
+        }
+        // 2.只有右孩子
+        if (node.right != null) {
+            // 返回右孩子
+            return node.right;
+        }
+        // 3.左右孩子都有：找到后继节点 处理后事
+        // 3.1 找后继节点：在右子树中找到最小值
+
+        // 如果后继节点与被删除节点相邻：将后继节点返回就是删剩下的
+
+        // 被删除节点与后继节点不相邻，此时以右子树作为查找被删除元素的起点，后继节点作为删除的节点，此时就又符合了被删除节点和后继节点相邻的情况了
+
+        BSTTreeNode deletedSuccessor = node.right;
+        while (deletedSuccessor.left != null) {
+            deletedSuccessor = deletedSuccessor.left;
+        }
+
+        // 处理不相邻的情况下设置后继节点的右指针 在后继节点上位之前，处理后继节点的后代
+        deletedSuccessor.right = doDeleteRecursive(node.right, deletedSuccessor.key, new ArrayList<>());
+
+        // 后继节点上位，左孩子指针需要设置，右孩子一起上来的不需要改
+        deletedSuccessor.left = node.left;
+
+        return deletedSuccessor;
+
+
+        // -----------------被删除的节点与后继节点相邻的处理逻辑 start---------------------
+        /*
+        BSTTreeNode deletedSuccessor = node.right;
+        while (deletedSuccessor.left != null) {
+            deletedSuccessor = deletedSuccessor.left;
+        }
+        // 后继节点上位，左孩子指针需要设置，右孩子一起上来的不需要改
+        deletedSuccessor.left = node.left;
+        return deletedSuccessor;
+         */
+        // -----------------被删除的节点与后继节点相邻的处理逻辑 end--------------------
+
+
+    }
 
     public void putRecursion(int key, Object value) {
         root = doPutRecursion(root,key,value);

@@ -1,6 +1,8 @@
 package com.hcx.algorithm.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @Title: BSTTree.java
@@ -281,6 +283,87 @@ public class BSTTree {
         return deletedParent.value;
     }
 
+    /**
+     * 找出比key小的所有值
+     * @param key
+     * @return
+     */
+    public List<Object> less(int key) {
+        ArrayList<Object> list = new ArrayList<>();
+        // 存储走过的路
+        LinkedList<BSTTreeNode> stack = new LinkedList<>();
+        // 中序遍历就是由小到大 左 根 右
+        BSTTreeNode pointer = root;
+        while (pointer != null || !stack.isEmpty()) {
+            if (pointer != null) {
+                stack.push(pointer);
+                pointer = pointer.left;
+            } else {
+                BSTTreeNode pop = stack.pop();
+                if (pop.key < key) {
+                    list.add(pop.value);
+                } else {
+                    break;
+                }
+                pointer = pop.right;
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 找出比key大的所有值
+     * 这里为了提高效率，采用反向中序遍历：右根左
+     * @param key
+     * @return
+     */
+    public List<Object> greater(int key) {
+        ArrayList<Object> list = new ArrayList<>();
+        LinkedList<BSTTreeNode> stack = new LinkedList<>();
+        BSTTreeNode pointer = root;
+        while (pointer != null || !stack.isEmpty()) {
+            if (pointer != null) {
+                stack.push(pointer);
+                pointer = pointer.right;
+            } else {
+                BSTTreeNode pop = stack.pop();
+                if (pop.key > key) {
+                    list.add(pop.value);
+                } else {
+                    break;
+                }
+                pointer = pop.left;
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 范围查询
+     * @param leftKey
+     * @param rightKey
+     * @return
+     */
+    public List<Object> between(int leftKey, int rightKey) {
+        ArrayList<Object> list = new ArrayList<>();
+        LinkedList<BSTTreeNode> stack = new LinkedList<>();
+        BSTTreeNode pointer = root;
+        while (pointer != null || !stack.isEmpty()) {
+            if (pointer != null) {
+                stack.push(pointer);
+                pointer = pointer.left;
+            } else {
+                BSTTreeNode pop = stack.pop();
+                if (pop.key >= leftKey && pop.key <= rightKey) {
+                    list.add(pop.value);
+                } else if (pop.key > rightKey) {
+                    break;
+                }
+                pointer = pop.right;
+            }
+        }
+        return list;
+    }
 
     /**
      * 托付方法:把孩子托付给父亲(只改变了父亲的指向)

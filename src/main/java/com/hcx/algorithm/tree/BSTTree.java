@@ -275,6 +275,10 @@ public class BSTTree {
             else {
                 // 处理后事：把后继节点的孩子托付给后继节点的父亲 （这里的后继节点不会有左孩子，因为他本身就是最左边的孩子了）
                 shift(deletedSuccessorParent, deletedSuccessor, deletedSuccessor.right);
+
+                // 后继上位
+                shift(deletedParent, pointer, deletedSuccessor);
+
                 // 上位节点的左右指针都需要改变：上位节点的右指针指向自己的后代，后代托付给了他的父亲了；他上位之后要把左右指针都指向原本被删除节点的左右指针指向的地方
                 deletedSuccessor.right = pointer.right;
                 deletedSuccessor.left = pointer.left;

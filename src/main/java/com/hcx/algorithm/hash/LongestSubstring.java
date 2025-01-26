@@ -108,6 +108,7 @@ public class LongestSubstring {
      * @return
      */
     public int lengthOfLongestSubstring2(String s) {
+        // 字符 本身作为下标，字符串中的索引 作为数组的元素
         int[] arr = new int[128];
         Arrays.fill(arr, -1);
         int begin = 0;

@@ -19,9 +19,35 @@ public class SelectSort {
     public static void main(String[] args) {
         int[] arr = {5,8,1,0,3,2};
 
-        select1(arr);
+        selectSort(arr);
 
         System.out.println(arr);
+    }
+
+    /**
+     * 选择排序
+     * @param arr
+     */
+    public static void selectSort(int[] arr) {
+        // 选择的轮数
+        for (int right = arr.length - 1; right > 0; right--) {
+            // 假设最后一个元素是最大的 从开头往后遍历，如果遇到比这个数大的，就重新把大的复制给max
+            // 选出了最大的元素，把元素交换到a.length依次递减
+            int max = right;
+            // 每一轮里遍历数组，找出最大值
+            for (int i = 0; i < right; i++) {
+                if (arr[i] > arr[max]) {
+                    max = i;
+                }
+            }
+            // 如果max等于了right 就不需要交换了 说明本身max就是这一轮最大的
+            if (max != right) {
+                // 找出了最大的元素为max索引位置 把最大的元素交换到最后(随着循环一直递减)第二个交换到的位置为倒数第二个
+                int temp = arr[max];
+                arr[max] = arr[right];
+                arr[right] = temp;
+            }
+        }
     }
 
     public static void select1(int[] arr) {

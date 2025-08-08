@@ -1,9 +1,5 @@
 package com.hcx.algorithm.linkedlist;
 
-import com.hcx.algorithm.recursion.RecursionDemo;
-
-import java.util.List;
-
 /**
  * @Title: ReverseList.java
  * @Package com.hcx.algorithm.linkedlist

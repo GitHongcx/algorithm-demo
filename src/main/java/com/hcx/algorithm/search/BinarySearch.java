@@ -13,6 +13,10 @@ public class BinarySearch {
     public static void main(String[] args) {
 
         int[] arr11 = new int[]{1, 2, 4, 4, 4, 7, 8};
+
+        int i7 = searchInsert1(arr11, 7);
+        System.out.println(i7);
+
         int i6 = binarySearchRecursion(arr11, 10, 0, arr11.length - 1);
         System.out.println(i6);
         System.out.println("******************");
@@ -501,4 +505,36 @@ public class BinarySearch {
         }
         return -1;
     }
+
+    public static int searchInsert1(int[] nums, int target) {
+        int i = 0;
+        int j = nums.length-1;
+        while(i<=j){
+            int targetIndex = (i+j)/2;
+            if(nums[targetIndex] == target){
+                return targetIndex;
+            }else if(nums[targetIndex] >= target){
+                j = targetIndex-1;
+            }else {
+                i = targetIndex+1;
+            }
+        }
+        return i;
+    }
+
+    /**
+     * 线性查找
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int linearSearch(int[] nums, int target){
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i] == target){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }

@@ -85,6 +85,11 @@ public class LinkedListStack<E> implements Stack<E>,Iterable<E> {
                 pointer = pointer.next;
                 return value;
             }
+
+            @Override
+            public void remove() {
+
+            }
         };
     }
 

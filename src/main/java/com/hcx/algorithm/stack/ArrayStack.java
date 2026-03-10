@@ -81,6 +81,11 @@ public class ArrayStack<E> implements Stack<E>,Iterable<E> {
             public E next() {
                 return array[--pointer];
             }
+
+            @Override
+            public void remove() {
+
+            }
         };
     }
 }

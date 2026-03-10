@@ -187,7 +187,38 @@ public class DeleteDuplicates {
         return sentinel.next;
     }
 
+    /**
+     * 移除数组中的重复元素
+     * @param nums
+     * @return
+     */
+    public static int removeDuplicates(int[] nums) {
+        int p1 = 0;
+        int p2 = 1;
+        int count = 0;
+        while (p2 < nums.length) {
+            // 找到不相等的 往前覆盖
+            // 1 1 2 3 4 4 5
+            if (nums[p1] != nums[p2]) {
+                nums[p1 + 1] = nums[p2];
+                p1++;
+                p2++;
+                count++;
+            } else { // 相等 p2继续往后找到直到不相等
+                p2++;
+            }
+        }
+        return count + 1;
+    }
+
     public static void main(String[] args) {
+        int[] nums = {0,0,1,1,1,2,2,3,3,4};
+        //int[] nums = {1,1,2};
+
+        int i = removeDuplicates(nums);
+        System.out.println(i);
+
+
         // 1 2 2 3 4
 //        ListNode node7 = new ListNode(5, null);
 //        ListNode node6 = new ListNode(4, node7);

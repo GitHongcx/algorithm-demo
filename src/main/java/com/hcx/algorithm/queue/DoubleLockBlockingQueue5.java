@@ -70,6 +70,11 @@ public class DoubleLockBlockingQueue5<E> implements BlockingQueue<E> {
     }
 
     @Override
+    public void offer(E e, long timeout) throws InterruptedException {
+
+    }
+
+    @Override
     public E poll() throws InterruptedException {
         E e;
         headLock.lockInterruptibly();

@@ -1,4 +1,4 @@
-package com.hcx.algorithm.hash;
+package com.hcx.algorithm.backtrack;
 
 import java.util.ArrayList;
 import java.util.HashMap;

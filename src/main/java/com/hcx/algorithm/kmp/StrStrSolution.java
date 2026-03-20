@@ -46,7 +46,7 @@ public class StrStrSolution {
         int j = 0;
         // i 一直前进 遍历模式串
         for (int i = 1; i < needle.length(); i++) {
-            if (j > 0 && needle.charAt(i) != needle.charAt(j)) {
+            while (j > 0 && needle.charAt(i) != needle.charAt(j)) {
                 j = next[j - 1];
             }
             // 当前长度为j的前缀无法扩展，但可能存在一个更短的前缀长度与当前后缀的末尾部分相等
